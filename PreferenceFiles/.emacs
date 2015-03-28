@@ -8,21 +8,28 @@
 ;;(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
 ;;(autoload 'camldebug "camldebug" "Run the Caml debugger" t)
 
+;; The Fortress programming language. RIP.
+;;
 ;; Turn on Fortress mode
-(load (concat (getenv "FORTRESS_HOME")
-	      "/Emacs/fortress-mode.el"))
-(push '("\\.fs[si]$" . fortress-mode) auto-mode-alist)
-
+;;(load (concat (getenv "FORTRESS_HOME")
+;;	      "/Emacs/fortress-mode.el"))
+;;(push '("\\.fs[si]$" . fortress-mode) auto-mode-alist)
 ;; Turn on Fortify
-(load (concat (getenv "FORTRESS_HOME")
-	      "/Fortify/fortify.el"))
+;;(load (concat (getenv "FORTRESS_HOME")
+;;	      "/Fortify/fortify.el"))
 
+;; SML programming language.
+;;
 ;; Turn on SML mode
-(add-to-list 'load-path "I:\\")
-(autoload 'sml-mode "sml-mode" "Major mode for editing Standard ML" t)
-(autoload 'htmlize "htmlize" "This will HTMLize your shit." t)
+;;(add-to-list 'load-path "I:\\")
+;;(autoload 'sml-mode "sml-mode" "Major mode for editing Standard ML" t)
+;;(autoload 'htmlize "htmlize" "This will HTMLize your shit." t)
+;;(setq auto-mode-alist
+;;      (append '(("\\.sml$" . sml-mode)
+;;		("\\.sig$" . sml-mode)
+;;		("\\.ML$"  . sml-mode)) auto-mode-alist))
 
-(setq-default ispell-program-name "aspell")
+;;(setq-default ispell-program-name "aspell")
 
 ;;Advice, probably stolen from the emacs extensions book.
 (defadvice switch-to-buffer (before existing-buffer  			
@@ -91,21 +98,12 @@ unless given a prefix argument."
     nil))
 
 (add-hook 'java-mode-hook 'my-java-hook)
-	  
-
-
-
-
-(setq auto-mode-alist
-      (append '(("\\.sml$" . sml-mode)
-		("\\.sig$" . sml-mode)
-		("\\.ML$"  . sml-mode)) auto-mode-alist))
 
 (defun frame-settings (f)
   (progn
     (if (null f) () (select-frame f))
     (menu-bar-mode -1)
-    (tool-bar-mode -1)
+    (if window-system (tool-bar-mode -1))
     (blink-cursor-mode -1)
     (set-background-color "grey15")
     (set-foreground-color "grey80")
@@ -132,3 +130,15 @@ unless given a prefix argument."
  '(font-lock-comment-face ((((class color) (background dark)) (:foreground "#11AABB"))))
  '(font-lock-doc-face ((t (:foreground "#CCBB99"))))
  '(font-lock-string-face ((((class color) (background dark)) (:foreground "#119911")))))
+
+;; C++ changes.
+;;
+;; Use C++ mode for header files. I never program in C...
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+;; Make indentation more like what I used at work.
+(defun my-c++-mode-hook ()
+  ;; Don't indent after namespaces.
+  (c-set-offset 'innamespace 0)
+  ;; public/private/protected only get 1 space of indentation.
+  (c-set-offset 'access-label '/))
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
