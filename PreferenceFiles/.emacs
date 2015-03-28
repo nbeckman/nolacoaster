@@ -65,6 +65,17 @@ unless given a prefix argument."
 (global-set-key "\C-x\C-n" 'other-window)
 (global-set-key "\C-x\C-p" 'other-window-backward)
 (global-set-key "\M-g" 'goto-line)
+;; Mac Terminal.
+;; If you think some ctrl-XXX keys don't work, it's probably the codes that
+;; the Mac terminal is sending for the key combination. For example, you might
+;; want to try to add these bindings:
+;;(global-set-key [\C-<down>] 'forward-paragraph)
+;;(global-set-key [\C-<up>] 'backward-paragraph)
+;; To make line skipping work, but these are normally bound by default in
+;; emacs. What you probably need to do is make sure the terminal is sending
+;; the following codes:
+;; ctrl-down: \033[1;5B
+;; ctrl-up:   \033[1;5A
 
 ;;Other variables
 
@@ -153,4 +164,3 @@ unless given a prefix argument."
 
 ;; TODO:
 ;; - c-o jumps to header/cc/test.
-;; - ctrl-up/down jumps to next blank line.
