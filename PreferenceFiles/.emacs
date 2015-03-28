@@ -135,10 +135,22 @@ unless given a prefix argument."
 ;;
 ;; Use C++ mode for header files. I never program in C...
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-;; Make indentation more like what I used at work.
 (defun my-c++-mode-hook ()
+  ;; Show trailing whitespace.
+  (setq-default show-trailing-whitespace t)
+  ;; Make indentation more like what I used at work.
   ;; Don't indent after namespaces.
   (c-set-offset 'innamespace 0)
   ;; public/private/protected only get 1 space of indentation.
   (c-set-offset 'access-label '/))
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+
+;; For C++ mode only, remove trailing whitespace on save.
+(defun my-c++-mode-before-save-hook ()
+  (when (eq major-mode 'c++-mode)
+    (whitespace-cleanup)))
+(add-hook 'before-save-hook 'my-c++-mode-before-save-hook)
+
+;; TODO:
+;; - c-o jumps to header/cc/test.
+;; - ctrl-up/down jumps to next blank line.
