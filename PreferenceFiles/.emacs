@@ -29,17 +29,21 @@
 ;;		("\\.sig$" . sml-mode)
 ;;		("\\.ML$"  . sml-mode)) auto-mode-alist))
 
+;; Turn off 'electric indents' which confusingly indent things after you type
+;; ; and :: and other such. I'll be the master of my own indention, thank you.
+(setq-default c-electric-flag nil)
+
 ;;(setq-default ispell-program-name "aspell")
 
 ;;Advice, probably stolen from the emacs extensions book.
-(defadvice switch-to-buffer (before existing-buffer  			
-				    activate compile)  	
-  "When interactive, switch to existing buffers only, 
-unless given a prefix argument."  	
-  (interactive  			
+(defadvice switch-to-buffer (before existing-buffer
+				    activate compile)
+  "When interactive, switch to existing buffers only,
+unless given a prefix argument."
+  (interactive
    (list (read-buffer "Switch to buffer:"
-		      (other-buffer)  	
-		      (null current-prefix-arg))))) 
+		      (other-buffer)
+		      (null current-prefix-arg)))))
 
 
 
@@ -107,7 +111,7 @@ unless given a prefix argument."
     (blink-cursor-mode -1)
     (set-background-color "grey15")
     (set-foreground-color "grey80")
-;; Do this if you are using Linux. 
+;; Do this if you are using Linux.
 ;; Look how crazy their freaking font names are...
 ;;    (set-default-font
 ;;     "-misc-fixed-bold-r-normal--13-100-100-100-c-70-iso8859-1")
