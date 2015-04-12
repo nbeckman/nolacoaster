@@ -43,6 +43,10 @@
 ;;		("\\.sig$" . sml-mode)
 ;;		("\\.ML$"  . sml-mode)) auto-mode-alist))
 
+;; Turn off 'electric indents' which confusingly indent things after you type
+;; ; and :: and other such. I'll be the master of my own indention, thank you.
+(setq-default c-electric-flag nil)
+
 ;;(setq-default ispell-program-name "aspell")
 
 ;;Advice, probably stolen from the emacs extensions book.
@@ -178,3 +182,4 @@ unless given a prefix argument."
 
 ;; TODO:
 ;; - c-o jumps to header/cc/test/etc.
+
