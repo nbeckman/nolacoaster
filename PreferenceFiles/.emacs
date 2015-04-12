@@ -4,6 +4,20 @@
        ;; Maximum colors
        (setq font-lock-maximum-decoration t)))
 
+;; Commands to remember.
+;; This section contains useful commands, not things that need to be run
+;; on every startup, but this seemed like the best place to store them.
+;;
+;; Recursively find and replace files in a directory:
+;; From http://stackoverflow.com/questions/270930/using-emacs-to-recursively-find-and-replace-in-text-files-not-already-open
+;; 1 - M-x find-name-dired: you will be prompted for a root directory and 
+;;     a filename  pattern.
+;; 2 - Press t to "toggle mark" for all files found.
+;; 3 - Press Q for "Query-Replace in Files...": you will be prompted for
+;;     query/substitution regexps.
+;; 4 - Proceed as with query-replace-regexp: SPACE to replace and move to next 
+;;     match, n to skip a match, etc.
+
 ;;(setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
 ;;(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
 ;;(autoload 'camldebug "camldebug" "Run the Caml debugger" t)
@@ -163,4 +177,4 @@ unless given a prefix argument."
 (add-hook 'before-save-hook 'my-c++-mode-before-save-hook)
 
 ;; TODO:
-;; - c-o jumps to header/cc/test.
+;; - c-o jumps to header/cc/test/etc.
