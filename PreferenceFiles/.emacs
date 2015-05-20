@@ -17,6 +17,7 @@
 ;;     query/substitution regexps.
 ;; 4 - Proceed as with query-replace-regexp: SPACE to replace and move to next 
 ;;     match, n to skip a match, etc.
+;; 5 - Remove all blank lines: M-x flush-lines RET ^\s-*$ RET
 
 ;;(setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
 ;;(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
