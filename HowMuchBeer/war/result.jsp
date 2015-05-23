@@ -44,7 +44,7 @@ margin-left: 2em;
 
 <div style="padding:0;margin:0;background:#123456"> 
 <div style="margin-left:15%;width:650px;background:#ABCDEF;border-left:2px solid #567890;border-right:10px solid #567890;border-bottom:5px solid #567890;padding:1em"> 
-<center><img src="/images/howmuchbeerlogo.png"/></center>
+<img style="margin:0px auto;display:block" src="/images/howmuchbeerlogo.png"/>
 <h1>Results</h1>
 
 <%
@@ -55,32 +55,41 @@ margin-left: 2em;
     String query = "select from " + BeerEventRecord.class.getName() + " where partyCraziness=='" + craziness + "'";
     List<BeerEventRecord> events = (List<BeerEventRecord>) pm.newQuery(query).execute();
     
-    if (events.isEmpty()) {
-%>
-<p>Sorry! We have no data on parties that are <%=craziness%>.
-<%
+    // We are going to completely ignore events. This database is now so full of spam that
+    // the results are crap. We'll just hardcode the output. :-(
+    long average_oz;
+    if ("WILD".equals(craziness)) {
+    	// 5 beers per person.
+    	average_oz = 5 * 12;
+    } else if ("CHILL".equals(craziness)) {
+    	// 1.5 beers per person.
+    	average_oz = 18;
     } else {
-      long average_oz = Calculations.mean(events);
-      
-      boolean was_long = true;
-      Long attendees = Long.valueOf(0);
-      try {
-        attendees = Long.parseLong(request.getParameter("attendees"));
-      } catch(NumberFormatException nfe) {
-        was_long = false;
+       // 3 beers per person.
+    	average_oz = 3 * 12;
+    }
+    boolean was_long = true;
+    Long attendees = Long.valueOf(0);
+    try {
+      attendees = Long.parseLong(request.getParameter("attendees"));
+      if (attendees < 0 ) {
+    	  attendees = Long.valueOf(0);
       }
+    } catch(NumberFormatException nfe) {
+      was_long = false;
+    }
       
-      if (was_long) {
-        // So, if you're in here, we are go for printing out shit.
-        long std_dev = Calculations.stdDev(events);
-        long mean_ounces = average_oz*attendees;
-        long above_ounces = mean_ounces + std_dev;
-        long below_ounces = mean_ounces - std_dev;
-        below_ounces = below_ounces < 0 ? 0 : below_ounces;
+    if (was_long) {
+      // So, if you're in here, we are go for printing out shit.
+      long std_dev = Calculations.stdDev(events);
+      long mean_ounces = average_oz * attendees;
+      long above_ounces = mean_ounces + std_dev;
+      long below_ounces = mean_ounces - std_dev;
+      below_ounces = below_ounces < 0 ? 0 : below_ounces;
 %>
     <p>So you're having a <%=craziness%> party with <%=attendees%> people?
 
-    <div class="one"><center>Average</center>
+    <div class="one">
     <p>For an average party, you should buy:
       <ul>
       <%
@@ -92,39 +101,10 @@ margin-left: 2em;
       %>
       </ul>
     </div>
-    <%
-      if(above_ounces != mean_ounces) { %>
-        <div class="one"><center>More Beer (+1 STDEV)</center>
-        <p>But if you want to be safe, you should buy:
-          <ul>
-          <%
-            for(String s : new BasicAssortment().resultsForOunces(above_ounces)) {
-          %>
-            <li><b><%=s%></b>
-          <%
-            } 
-          %>
-          </ul>
-        </div>
-    <% } %>
-    <% if(below_ounces != mean_ounces) { %>
-      <div class="one"><center>Less Beer (-1 STDEV)</center>
-      <p>And if you're trying to save money, buy:
-        <ul>
-        <%
-          for(String s : new BasicAssortment().resultsForOunces(below_ounces)) {
-        %>
-          <li><b><%=s%></b>
-        <%
-          } 
-        %>
-        </ul>
-      </div> <% }
-    } else { %>
+<%  } else { %>
     <p> Uh oh, the number of attendees, <%=request.getParameter("attendees")%>, is not a number!
 <%
-      }
-   }
+  }
 %>
 <div class="clear"></div>
 </div>
