@@ -9,7 +9,7 @@
 # May use lots of RAM!
 #
 # Usage:
-# ./keep_photo_dump.py my_keep_file.html my_keep_file_2.html ...
+# ./keep_photo_dump.py my_keep_file.html
 #
 import argparse
 import base64
