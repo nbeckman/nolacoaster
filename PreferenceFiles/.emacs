@@ -19,6 +19,12 @@
 ;;     match, n to skip a match, etc.
 ;; 5 - Remove all blank lines: M-x flush-lines RET ^\s-*$ RET
 
+;; All programming languages.
+;;
+;; Most of the time I want fill-paragraph (M-q) to use 80 characters (but I may
+;; not for Java).
+(setq-default fill-column 80)
+
 ;;(setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
 ;;(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
 ;;(autoload 'camldebug "camldebug" "Run the Caml debugger" t)
